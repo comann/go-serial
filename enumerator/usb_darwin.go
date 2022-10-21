@@ -50,7 +50,7 @@ func extractPortInfo(s C.io_object_t) (*PortDetails, error) {
 
 	usbDevice := service
 	var searchErr error
-	for usbDevice.GetClass() != "IOUSBDevice" {
+	for usbDevice.GetClass() != "IOUSBDevice" && usbDevice.GetClass() != "IOUSBHostDevice" {
 		if usbDevice, searchErr = usbDevice.GetParent("IOService"); searchErr != nil {
 			break
 		}
