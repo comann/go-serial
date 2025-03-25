@@ -8,7 +8,7 @@
 
 Package go-serial is a cross-platform serial library for the go language.
 
-	import github.com/albenik/go-serial/v2
+	import github.com/comann/go-serial/v2
 
 It is possible to get the list of available serial ports with the
 GetPortsList function:
