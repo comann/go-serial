@@ -6,13 +6,12 @@
 //
 
 //go:build linux || darwin || freebsd || openbsd
-// +build linux darwin freebsd openbsd
 
 package serial
 
 import (
 	"errors"
-	"io/ioutil"
+	"os"
 	"path"
 	"regexp"
 	"strings"
@@ -383,7 +382,7 @@ func (p *Port) retrieveModemBitsStatus() (int, error) {
 }
 
 func (p *Port) applyModemBitsStatus(status int) error {
-	if err := unix.IoctlSetInt(p.internal.handle, unix.TIOCMSET, status); err != nil {
+	if err := unix.IoctlSetPointerInt(p.internal.handle, unix.TIOCMSET, status); err != nil {
 		return newPortOSError(err)
 	}
 	return nil
@@ -419,7 +418,7 @@ func (p *Port) reconfigure() error {
 }
 
 func GetPortsList() ([]string, error) {
-	files, err := ioutil.ReadDir(devicesBasePath)
+	files, err := os.ReadDir(devicesBasePath)
 	if err != nil {
 		return nil, err
 	}
